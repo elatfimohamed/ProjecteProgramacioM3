@@ -18,21 +18,20 @@ public class ProjecteViesFerrates {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        boolean material = false, casco = false, arnes = false, tercebaga = false, buitcorda = false, guants = false, calsat = false;
+
         String nomvia = null, localitat = null, regio = null, provincia = null;
-        
+        boolean material = false;
         boolean dificultat = false;
+        boolean omplit = false;
         int desnivel = 0;
         float longitut = 0;
         char esdificultat = ' ';
         char esmaterial = ' ';
         Scanner entrada = new Scanner(System.in);
-        Scanner entNum=new Scanner(System.in);
-        Scanner entText=new Scanner(System.in);
+        Scanner entNum = new Scanner(System.in);
+        Scanner entText = new Scanner(System.in);
         int i;
         String text;
-
-       
 
         int opcio;         // l'opció introduïda per l'usuari
 
@@ -45,14 +44,16 @@ public class ProjecteViesFerrates {
             System.out.println("| 2. Borrar Via                                        |");
             System.out.println("| 3. Modificar Via                                     |");
             System.out.println("| 4. Llistar Vies                                      |");
+            System.out.println("| 5. Recupera Vies                                     |");
             System.out.println("+------------------------------------------------------+");
             System.out.print("--> Tria una opció: ");
 
             switch (opcio = entrada.nextInt()) {
 
                 case 1:
-                    System.out.println("Introdueix una via:");   
-                     text = entText.nextLine();
+                    System.out.println("Introdueix una via:");
+                    if(!omplit) {
+                    text = entText.nextLine();
                     nomvia = entrada.nextLine();
                     System.out.println("Introdueix localitat");
                     localitat = entrada.nextLine();
@@ -66,19 +67,26 @@ public class ProjecteViesFerrates {
 
                     } while (esdificultat != 'S' && esdificultat != 'N');
                     dificultat = (esdificultat == 'S');
-                    
+
                     System.out.println("És necesari el us del material? (S/N)");
                     do {
                         esmaterial = entrada.nextLine().toUpperCase().charAt(0);
 
                     } while (esmaterial != 'S' && esmaterial != 'N');
                     material = (esmaterial == 'S');
+                       System.out.println("Longitut ");
+                        longitut=entrada.nextFloat();
+                     
                     
+                    omplit=true;
+                    }
+                
                     
 
                     break;
                 case 2:
                     System.out.println("Borrar Via :");
+                 
 
                     break;
                 case 3:
@@ -88,6 +96,11 @@ public class ProjecteViesFerrates {
 
                 case 4:
                     System.out.println("Llistar Viess :");
+                    break;
+
+                case 5:
+                    System.out.println("Llistar Viess :");
+                    break;
 
                 case 0:
                     System.out.println("Sortim del programa.");
