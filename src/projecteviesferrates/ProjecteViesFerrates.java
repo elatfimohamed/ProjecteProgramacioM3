@@ -12,27 +12,43 @@ import java.util.Scanner;
  * @author alumne
  */
 public class ProjecteViesFerrates {
+ 
+    //numero de caselles maxim de l'array 
+    public static final int MAX_VIES = 2;
+
+    //Array on guardarem la informacio del les vies 
+    public static Via[] array = new Via[MAX_VIES];
 
     /**
      * @param args the command line arguments
      */
+    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
-        // TODO code application logic here
 
+
+       
+       // 
+        for (int i = 0; i < array.length; i++) {
+            array[i]=new Via();
+            array[i].setOmplit(false);
+        }
+ 
+        
+        
+
+        // Les meues propietats
         String nomvia = null, localitat = null, regio = null, provincia = null;
         boolean material = false;
         boolean dificultat = false;
-        boolean omplit = false;
         int desnivel = 0;
         float longitut = 0;
         char esdificultat = ' ';
         char esmaterial = ' ';
+        boolean omplit = false;
         char mostrar;
         char modificar;
+
         Scanner entrada = new Scanner(System.in);
-        
-        
-        
 
         int opcio;         // l'opció introduïda per l'usuari
 
@@ -40,11 +56,11 @@ public class ProjecteViesFerrates {
         do {
 
             System.out.println("+------------------------ MENU ------------------------+");
-            System.out.println("| 0. Sortir del programa.                              |");
-            System.out.println("| 1. Introdueix una via.                               |");
-            System.out.println("| 2. Borrar Via                                        |");
-            System.out.println("| 3. Modificar Via                                     |");
-            System.out.println("| 4. Llistar Vies                                      |");
+            System.out.println("| 0. Sortir del programa.                               |");
+            System.out.println("| 1. Introdueix una via.                                |");
+            System.out.println("| 2. Borrar Via                                         |");
+            System.out.println("| 3. Modificar Via                                      |");
+            System.out.println("| 4. Llistar Vies                                       |");
             System.out.println("| 5. Recuperar Vies                                     |");
             System.out.println("+------------------------------------------------------+");
             System.out.print("--> Tria una opció: ");
@@ -52,15 +68,24 @@ public class ProjecteViesFerrates {
             switch (opcio = entrada.nextInt()) {
 
                 case 1:
-                    if (!omplit) { //omplit==false
+                   // if (i<array.length){
+                    
+                   if (!omplit) { //omplit==false
+                       
                         System.out.println("Introdueix una via:");
-                        nomvia = entrada.skip("[\r\n]*").nextLine();
+                       nomvia = entrada.skip("[\r\n]*").nextLine();
+                        // array[i].setNomvia(entrada.skip("[\r\n]*").nextLine());
+                         
                         System.out.println("Introdueix localitat");
                         localitat = entrada.nextLine();
+                        //array[i].getLocalitat();
+                   
                         System.out.println("Introdueix regio");
                         regio = entrada.nextLine();
+                        
                         System.out.println("Introdueix provincia");
                         provincia = entrada.nextLine();
+                        
                         System.out.println("És dificil o no ? (S/N):");
                         do {
                             esdificultat = entrada.nextLine().toUpperCase().charAt(0);
@@ -83,7 +108,8 @@ public class ProjecteViesFerrates {
                     }
 
                     break;
-                case 2:
+                    
+                case 2:       
                     if (omplit) {
                         System.out.println("Vols veure la via (S/N)?:");
                         mostrar = entrada.next().charAt(0);
@@ -142,6 +168,7 @@ public class ProjecteViesFerrates {
                     }
 
                     break;
+                    
                 case 3:
                     if (!omplit) {
                         System.out.println("No hi ha cap Via per modificar; si el vols modificar l'hauràs d'introduïr primer.\n" + "");
@@ -311,7 +338,7 @@ public class ProjecteViesFerrates {
 
                                 } while (desnivel <= 0);
                             }
-                             // longitut 
+                            // longitut 
                             System.out.println("\nLongitut: " + longitut);
 
                             do {
@@ -322,7 +349,7 @@ public class ProjecteViesFerrates {
                             if (modificar == 's' || modificar == 'S') {
                                 do {
                                     System.out.println("Introdueix el nou valor de la  longitut: (> 0)");
-                                   longitut = entrada.nextInt();
+                                    longitut = entrada.nextInt();
 
                                     if (longitut <= 0) {
                                         System.out.println("Valor incorrecte!!");
@@ -330,7 +357,6 @@ public class ProjecteViesFerrates {
 
                                 } while (longitut <= 0);
                             }
-
 
                             System.out.println("\nVia modificada  correctament.\n");
 
@@ -363,7 +389,7 @@ public class ProjecteViesFerrates {
                     omplit = true;
 
                     System.out.println("Informacio de Vies: ");
-                    
+
                     System.out.println("nomvia:       " + nomvia);
                     System.out.println("localitat:    " + localitat);
                     System.out.println("Regio:        " + regio);
