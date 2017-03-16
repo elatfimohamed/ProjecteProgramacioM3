@@ -25,7 +25,13 @@ public class ProjecteViesFerrates {
     @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
 
-
+        //Variables  locals
+        
+      
+        Scanner entrada = new Scanner(System.in);
+         int opcio;         // l'opció introduïda per l'usuari
+         Via v=null;    //l'utilitzem per apuntar a la via de les casselles de l'array 
+        
        
        // 
         for (int i = 0; i < array.length; i++) {
@@ -36,25 +42,10 @@ public class ProjecteViesFerrates {
         
         
 
-        // Les meues propietats
-        String nomvia = null, localitat = null, regio = null, provincia = null;
-        boolean material = false;
-        boolean dificultat = false;
-        int desnivel = 0;
-        float longitut = 0;
-        char esdificultat = ' ';
-        char esmaterial = ' ';
-        boolean omplit = false;
-        char mostrar;
-        char modificar;
-
-        Scanner entrada = new Scanner(System.in);
-
-        int opcio;         // l'opció introduïda per l'usuari
 
         //Bucle per mostra el menú
         do {
-
+            char siNo;
             System.out.println("+------------------------ MENU ------------------------+");
             System.out.println("| 0. Sortir del programa.                               |");
             System.out.println("| 1. Introdueix una via.                                |");
@@ -68,338 +59,264 @@ public class ProjecteViesFerrates {
             switch (opcio = entrada.nextInt()) {
 
                 case 1:
-                   // if (i<array.length){
-                    
-                   if (!omplit) { //omplit==false
-                       
-                        System.out.println("Introdueix una via:");
-                       nomvia = entrada.skip("[\r\n]*").nextLine();
-                        // array[i].setNomvia(entrada.skip("[\r\n]*").nextLine());
-                         
+                    int i;
+                    for (i = 0; i < array.length && array[i].isOmplit(); i++);
+
+                    //Si no sa sa arribat al final és que hem trobat una casella buida 
+                    if (i < array.length) {
+
+                        System.out.println("\nNomvia:");
+                        array[i].setNomvia(entrada.skip("[\r\n]*").nextLine());
+
                         System.out.println("Introdueix localitat");
-                        localitat = entrada.nextLine();
-                        //array[i].getLocalitat();
-                   
+                        array[i].setLocalitat(entrada.skip("[\r\n]*").nextLine());
+                        
+                         System.out.println("Introdueix provincia");
+                        array[i].setProvincia(entrada.skip("[\r\n]*").nextLine());
+
                         System.out.println("Introdueix regio");
-                        regio = entrada.nextLine();
+                        array[i].setRegio(entrada.skip("[\r\n]*").nextLine());
+
+                   
                         
-                        System.out.println("Introdueix provincia");
-                        provincia = entrada.nextLine();
-                        
-                        System.out.println("És dificil o no ? (S/N):");
+                        //si te dificultat o no ; 
+                        char esDificultat;
+
                         do {
-                            esdificultat = entrada.nextLine().toUpperCase().charAt(0);
+                           System.out.println("És dificil o no ? (S/N):");
 
-                        } while (esdificultat != 'S' && esdificultat != 'N');
-                        dificultat = (esdificultat == 'S');
+                            esDificultat = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
 
-                        System.out.println("És necesari el us del material? (S/N)");
+                       } while (esDificultat != 'S' && esDificultat != 'N');
+
+                        array[i].setDificultat(esDificultat == 'S');
+                        array[i].setOmplit(true);
+                       
+                       
+                        //Si es necesari el mateial o no; 
+                        char esMaterial;
+
                         do {
-                            esmaterial = entrada.nextLine().toUpperCase().charAt(0);
 
-                        } while (esmaterial != 'S' && esmaterial != 'N');
-                        material = (esmaterial == 'S');
+                            System.out.println("És necesari el us del material? (S/N)");
+
+                            esMaterial = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
+
+                        } while (esMaterial != 'S' && esMaterial != 'N');
+
+                        array[i].setDificultat(esMaterial == 'S');
+                        array[i].setOmplit(true);
 
                         System.out.println("Longitut que te (1000M)");
-                        longitut = entrada.nextFloat();
+                        array[i].setLongitut(entrada.skip("[\r\n]*").nextInt());
+
                         System.out.println("Desnivel que te (1000) ");
-                        desnivel = entrada.nextInt();
-                        omplit = true;
-                    }
+                        array[i].setDesnivel(entrada.skip("[\r\n]*").nextInt());
 
-                    break;
-                    
-                case 2:       
-                    if (omplit) {
-                        System.out.println("Vols veure la via (S/N)?:");
-                        mostrar = entrada.next().charAt(0);
-                        do {
-                            switch (mostrar) {
-                                case 'S':
-                                case 's':
-                                    System.out.println("nomvia     :" + nomvia);
-                                    System.out.println("localitat  :" + localitat);
-                                    System.out.println("regio      :" + regio);
-                                    System.out.println("provincia  :" + provincia);
-                                    System.out.println("dificultat :" + esdificultat);
-                                    System.out.println("material   :" + esmaterial);
-                                    System.out.println("longitut   :" + longitut);
-                                    System.out.println("desnivel   :" + desnivel);
-                                    mostrar = 'N';
-                                    break;
-                                case 'N':
-                                case 'n':
-                                    System.out.println("dacort");
-                                    break;
-                                default:
-                                    System.out.println("No es valida");
-                                    System.out.println("Vols veure les vies ? (S/N)?:");
-                                    mostrar = entrada.next().charAt(0);
-                                    break;
-                            }
-                        } while (mostrar != 'N');
-                        System.out.println("Vols borrar la via (S/N)?:");
-                        mostrar = entrada.next().charAt(0);
-                        switch (mostrar) {
-                            case 'S':
-                            case 's':
-                                nomvia = null;
-                                localitat = null;
-                                regio = null;
-                                provincia = null;
-                                dificultat = false;
-                                material = false;
-                                longitut = 0;
-                                desnivel = 0;
-                                omplit = false;
-                                break;
-                            case 'N':
-                            case 'n':
-                                System.out.println("La informacio No esta borrada!!!");
-                                break;
-                            default:
-                                System.out.println("La opcio No ES VALIDA!!");
-                                System.out.println("Vols borrar les dades (S/N)?:!!");
-                                mostrar = entrada.next().charAt(0);
-                                break;
-                        }
                     } else {
-                        System.out.println("No HI HAN DADES!!!");
+                        System.out.println("\nNo hi caben més Vies, si vols, primer borra'n.");
                     }
-
                     break;
+
+
+                case 2:
+                                        //2.Borrar la via 
+                  
+                    siNo='N';
+                    for (i = 0; i < array.length && siNo!='A'; i++) {
+                        v=array[i];
+                        if(v.isOmplit()){
+                            System.out.println(v);
+                            do {
+                                System.out.println("\nVols borrar La Via (S/N) o Acabar la tasca (A)?:");
+                                siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                                                                                                
+                            } while (siNo != 'S' && siNo != 'N' && siNo != 'A');
+                        }
+                        if(siNo=='S') break;                    
+                    }
                     
-                case 3:
-                    if (!omplit) {
-                        System.out.println("No hi ha cap Via per modificar; si el vols modificar l'hauràs d'introduïr primer.\n" + "");
+                    if (siNo=='S') {
+                        v.setOmplit(false);       
+                        System.out.println("Via borrada  correctament.");
+                        
+                    } else {
+                        System.out.println("\nNo s'ha borrat cap VIA.");
                     }
-
-                    if (omplit) {
-
-                        do {
-
-                            System.out.println("Vols veure la informacio del Via? (S/N)");
-                            mostrar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-
-                        } while (mostrar != 's' && mostrar != 'n' && mostrar != 'S' && mostrar != 'N');
-
-                        if (mostrar == 's' || mostrar == 'S') {
-                            System.out.println("Informacio de la via  : ");
-                            System.out.println("Nomvia:    :" + nomvia);
-                            System.out.println("Localitat: :" + localitat);
-                            System.out.println("Provincia  :" + provincia);
-                            System.out.println("Regio      :" + regio);
-                            System.out.println("dificultat :" + dificultat);
-                            System.out.println("Material   :" + material);
-                            System.out.println("Longitut   :" + longitut);
-                            System.out.println("Desnivel   :" + desnivel);
-
-                        }
-
-                        do {
-                            //Modificar nomvia
-                            System.out.println("Vols modificar la via  (S/N)?");
-                            mostrar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-
-                        } while (mostrar != 's' && mostrar != 'n' && mostrar != 'S' && mostrar != 'N');
-
-                        if (mostrar == 's' || mostrar == 'S') {
-
-                            System.out.println("\nNomVia: " + nomvia);
-
-                            do {
-                                System.out.println("Vols modificar el nom de la via (S/N)?");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                System.out.println("Introdueix un Nou nom de Via:");
-                                nomvia = entrada.skip("[\r\n]*").nextLine();
-                            }
-
-                            //Modificar localitat
-                            System.out.println("\nLocalitat: " + localitat);
-
-                            do {
-                                System.out.println("Vols modificar la localitat (S/N)");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                System.out.println("Introdueix una nova localitat :");
-                                nomvia = entrada.skip("[\r\n]*").nextLine();
-                            }
-
-                            // dificultat Si o NO 
-                            if (dificultat) {
-                                System.out.println("\nDificil : Sí");
-                            }
-
-                            if (!dificultat) {
-                                System.out.println("\nDificlil : No");
-                            }
-
-                            do {
-                                System.out.println("Vols modificar si és dificil (S/N)?");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                do {
-                                    System.out.println("Introdueix el NOU valor per a dificil: (S/N)");
-                                    esdificultat = entrada.skip("[\r\n]*").nextLine().charAt(0);
-
-                                    if (esdificultat == 's' || esdificultat == 'S') {
-                                        dificultat = true;
-                                    }
-
-                                    if (esdificultat == 'n' || esdificultat == 'N') {
-                                        dificultat = false;
-                                    }
-
-                                } while (esdificultat != 's' && esdificultat != 'n' && esdificultat != 'S' && esdificultat != 'N');
-
-                            }
-
-                            // material  Si o NO 
-                            if (material) {
-                                System.out.println("\nMaterial : Sí");
-                            }
-
-                            if (!material) {
-                                System.out.println("\nMaterial : No");
-                            }
-
-                            do {
-                                System.out.println("Vols modificar si és dificil (S/N)?");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                do {
-                                    System.out.println("Introdueix el NOU valor per a dificil: (S/N)");
-                                    esmaterial = entrada.skip("[\r\n]*").nextLine().charAt(0);
-
-                                    if (esmaterial == 's' || esmaterial == 'S') {
-                                        dificultat = true;
-                                    }
-
-                                    if (esmaterial == 'n' || esmaterial == 'N') {
-                                        dificultat = false;
-                                    }
-
-                                } while (esmaterial != 's' && esmaterial != 'n' && esmaterial != 'S' && esmaterial != 'N');
-
-                            }
-
-                            // Provincia
-                            System.out.println("\nProvincia: " + provincia);
-
-                            do {
-                                System.out.println("Vols modificar la provincia ? (S/N)");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                System.out.println("Introdueix la nova provincia !!:");
-                                provincia = entrada.skip("[\r\n]*").nextLine();
-                            }
-
-                            // Regio
-                            System.out.println("\nRegio: " + regio);
-
-                            do {
-                                System.out.println("Vols modificar la regio?   (S/N)");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-
-                                System.out.println("Introdueix la Nova regio : ");
-                                regio = entrada.skip("[\r\n]*").nextLine();
-                            }
-
-                            // Desnivel
-                            System.out.println("\nDesnivel: " + desnivel);
-
-                            do {
-                                System.out.println("Vols modificar el valor del desnivel? (S/N)");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                do {
-                                    System.out.println("Introdueix el nou valor del desnivel: (> 0)");
-                                    desnivel = entrada.nextInt();
-
-                                    if (desnivel <= 0) {
-                                        System.out.println("Valor incorrecte!!");
-                                    }
-
-                                } while (desnivel <= 0);
-                            }
-                            // longitut 
-                            System.out.println("\nLongitut: " + longitut);
-
-                            do {
-                                System.out.println("Vols modificar el valor la longitut ? (S/N)");
-                                modificar = entrada.skip("[\r\n]*").nextLine().charAt(0);
-                            } while (modificar != 's' && modificar != 'n' && modificar != 'S' && modificar != 'N');
-
-                            if (modificar == 's' || modificar == 'S') {
-                                do {
-                                    System.out.println("Introdueix el nou valor de la  longitut: (> 0)");
-                                    longitut = entrada.nextInt();
-
-                                    if (longitut <= 0) {
-                                        System.out.println("Valor incorrecte!!");
-                                    }
-
-                                } while (longitut <= 0);
-                            }
-
-                            System.out.println("\nVia modificada  correctament.\n");
-
-                            break;
-                        }
-
-                    }
-
                     break;
+                 
+                    
+                              
+                case 3:
+                                      //3.Modificar la via 
+                   
+                      siNo='N';
+                    int cont=1;
+                    for(i=0; i<array.length && siNo!='A';i++){
+                        if(array[i].isOmplit()){
+                            System.out.format("\nVIA %d:\n", cont++);
+                            System.out.println(array[i].toString());
+                            do {  
+                        System.out.println("\nVols modificar la Via (S/N) o (A)?:");
+                                siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
+                                                                                                
+                            } while (siNo != 'S' && siNo != 'N' && siNo != 'A');
+                        }
+                        if(siNo=='S') break;
+                    }
+                    
+                    if (siNo=='S') {
+                            
+                        System.out.println("\nNom: "+array[i].getNomvia());
+                        do {
+                            System.out.println("\nVols modificar el nom de la via?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            System.out.print("Nou nomVia: ");
+                            array[i].setNomvia(entrada.skip("[\r\n]*").nextLine());
+                        }
+                        
+                           System.out.println("\nNom: "+array[i].getProvincia());
+                        do {
+                            System.out.println("\nVols modificar el nom de la Provincia?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            System.out.print("Nou nomProvinciaA: ");
+                            array[i].setProvincia(entrada.skip("[\r\n]*").nextLine());
+                        }
+                        
+                         System.out.println("\nNom: "+array[i].getLocalitat());
+                        do {
+                            System.out.println("\nVols modificar el nom de la localitat?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            System.out.print("Nou nomProvinciaA: ");
+                            array[i].setLocalitat(entrada.skip("[\r\n]*").nextLine());
+                        }
+                        
+                        
+                         System.out.println("\nNom: "+array[i].getRegio());
+                        do {
+                            System.out.println("\nVols modificar el nom de la Regio?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            System.out.print("Nou nom la Regio: ");
+                            array[i].setRegio(entrada.skip("[\r\n]*").nextLine());
+                        }
+                        
+             
+                        System.out.println("\nDesnivel: "+array[i].getDesnivel());
+                        do {
+                            System.out.println("\nVols modificar el Disnivel  ?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            System.out.print("Posa la nou Desnivel: ");
+                            array[i].setDesnivel(entrada.skip("[\r\n]*").nextInt());
+                        }
+                        
+                         if(array[i].isDificultat()) System.out.println("\nÉs Dificil ");
+                        else System.out.println("\nNo es dificil");
+                        do {
+                            System.out.println("\nVols modificar la dificulat ?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            char esDificultat;
+                            do {
+                                System.out.println("És Dificil ?(S/D¡N):");
+                                esDificultat = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
+                            } while (esDificultat != 'S' && esDificultat != 'N');
+                            array[i].setDificultat(esDificultat == 'S');    
+                            System.out.print("Nova dificultat : ");
+                            if(array[i].isDificultat()) System.out.println("S");
+                            else System.out.println("N");
+                        }
+                        
+         
+                        
+                        if(array[i].isMaterial()) System.out.println("\nEs necesari Material ");
+                        else System.out.println("\nNo es necesari Material");
+                        do {
+                            System.out.println("\nVols modificar la dificulat ?(S/N):");
+                            siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                        } while (siNo != 'S' && siNo != 'N');
+                        if (siNo == 'S'){
+                            char esMaterial;
+                            do {
+                                System.out.println("És Necessari Material ?(S/D¡N):");
+                                esMaterial = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
+                            } while (esMaterial != 'S' && esMaterial != 'N');
+                            array[i].setMaterial(esMaterial == 'S');    
+                            System.out.print("Nou modificacio de material : ");
+                            if(array[i].isDificultat()) System.out.println("S");
+                            else System.out.println("N");
+                        }
+                        
+                         System.out.println("Via modificat correctament.");
+                        
+                        
+                    } else {
+                        System.out.println("\nNo Hi ha cap Via  per modificar, o no n'has triat cap per modificar.");
+                    }
+                    break;
+
 
                 case 4:
-                    if (omplit) {
-                        System.out.println("nomVia           :" + nomvia);
-                        System.out.println("locaitat         :" + localitat);
-                        System.out.println("Regio            :" + regio);
-                        System.out.println("Provincia        :" + provincia);
-                        System.out.println("Dificultat (S/N) :" + dificultat);
-                        System.out.println("Material (S/N)   :" + material);
-                        System.out.println("Longitut         :" + longitut);
-                        System.out.println("Desnivel         :" + desnivel);
-
-                    } else {
-                        System.out.println("NO HI HAN DADES!!!");
-
+                                //4.Llistar les via
+                    boolean alguna=false;
+                    siNo='S';
+                    for (i = 0; i < array.length; i++) {
+                        v=array[i];
+                        if(v.isOmplit()){
+                            alguna=true;
+                            System.out.println(v);
+                            do {
+                                System.out.println("\nVols veure mes Vies (S/N)?:");
+                                siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
+                                                                                                
+                            } while (siNo != 'S' && siNo != 'N');
+                        }
+                        if(siNo=='N') break;                    
                     }
-
+                    if (!alguna) {
+                        System.out.println("\nNo hi ha Vies  per mostrar  si vols, primer  introduir alguna !!.");                        
+                    }                    
                     break;
+                            
+                    
 
                 case 5:
-                    omplit = true;
-
-                    System.out.println("Informacio de Vies: ");
-
-                    System.out.println("nomvia:       " + nomvia);
-                    System.out.println("localitat:    " + localitat);
-                    System.out.println("Regio:        " + regio);
-                    System.out.println("provincia:    " + provincia);
-                    System.out.println("material:     " + dificultat);
-                    System.out.println("Longitut:     " + longitut);
-                    System.out.println("Desnivel      " + desnivel);
+                  siNo='N';
+                    for (i = 0; i < array.length && siNo!='A'; i++) {
+                        v=array[i];
+                        if(!v.isOmplit()){
+                            System.out.println(v);
+                            do {
+                                System.out.println("\nVols recuperar la Via (S/N) o Acabar la cerca  (A)?:");
+                                siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); //usem toUpperCase() que traduix el text introduït per l'usuari a majúscules, 
+                                                                                                //per tant només haurem de tractar les lletres majúscules
+                            } while (siNo != 'S' && siNo != 'N' && siNo != 'A');
+                        }
+                        if(siNo=='S') break;                    
+                    }
+                    
+                    if (siNo=='S') {
+                        v.setOmplit(true);       
+                        System.out.println("Via  recuperat correctament.");
+                        
+                    } else {
+                        System.out.println("\nNo s'ha recuperat cap Via :/.");
+                    }
+                    
+                 
 
                 case 0:
-                    System.out.println("Sortim del programa.");
+                    System.out.println("Adeu Fins unaltra!!!");
                     break;
 
                 default:
