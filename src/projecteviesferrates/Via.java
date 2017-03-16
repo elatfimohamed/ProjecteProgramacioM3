@@ -5,6 +5,8 @@
  */
 package projecteviesferrates;
 
+import java.util.Objects;
+
 /**
  *
  * @author alumne
@@ -30,6 +32,12 @@ public class Via {
     public String getNomvia() {
         return nomvia;
     }
+
+    @Override
+    public String toString() {
+        return "Via{" + "nomvia=" + nomvia + ", localitat=" + localitat + ", regio=" + regio + ", provincia=" + provincia + ", material=" + material + ", dificultat=" + dificultat + ", desnivel=" + desnivel + ", longitut=" + longitut + ", esdificultat=" + esdificultat + ", esmaterial=" + esmaterial + ", omplit=" + omplit + '}';
+    }
+
 
     public void setNomvia(String nomvia) {
         this.nomvia = nomvia;
