@@ -296,7 +296,7 @@ public static void demanarOpcio() {
             if (siNo == 'S') {
                 char esMaterial;
                 do {
-                    System.out.println("És Necessari Material ?(S/D¡N):");
+                    System.out.println("És Necessari Material ?(S/N):");
                     esMaterial = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0);
                 } while (esMaterial != 'S' && esMaterial != 'N');
                 array[i].setMaterial(esMaterial == 'S');
