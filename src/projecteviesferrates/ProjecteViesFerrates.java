@@ -358,8 +358,7 @@ public static void demanarOpcio() {
                 System.out.println(v);
                 do {
                     System.out.println("\nVols recuperar la Via (S/N) o Acabar la cerca  (A)?:");
-                    siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); //usem toUpperCase() que traduix el text introduït per l'usuari a majúscules, 
-                    //per tant només haurem de tractar les lletres majúscules
+                    siNo = entrada.skip("[\r\n]*").nextLine().toUpperCase().charAt(0); 
                 } while (siNo != 'S' && siNo != 'N' && siNo != 'A');
             }
             if (siNo == 'S') {
